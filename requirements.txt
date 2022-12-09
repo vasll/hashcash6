@@ -1,0 +1,4 @@
+psutil~=5.9.4
+Flask~=2.2.2
+typer~=0.7.0
+rich~=12.6.0

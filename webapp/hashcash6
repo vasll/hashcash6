@@ -1,0 +1,75 @@
+import json
+from typer import Option, Typer, Argument, Exit as cliExit
+from typing import Optional
+from standalone.hashcash6 import Hashcash6
+from standalone.hc6_utils import hex_to_bin
+from datetime import datetime
+
+# Modified hashcash6 script for the webapp
+# TODO - Rename hashcash6webcli to hashcash6 in production
+
+cli = Typer(
+    add_completion=False,
+    pretty_exceptions_short=True,
+)
+
+# ASCII art because yes
+ascart = r"""[[gb;#00cccc;]    __  __                    __                             __     _____
+   / / / /  ____ _   _____   / /_   _____  ____ _   _____   / /_   / ___/
+  / /_/ /  / __ `/  / ___/  / __ \ / ___/ / __ `/  / ___/  / __ \ / __ \
+ / __  /  / /_/ /  (__  )  / / / // /__  / /_/ /  (__  )  / / / // /_/ /
+/_/ /_/   \__,_/  /____/  /_/ /_/ \___/  \__,_/  /____/  /_/ /_/ \____/ [[gb;yellow;]v1.0w]"""
+
+
+# Callback for the --about Option
+def about_callback(value: bool):
+    if value:
+        print(ascart, end="\n\n")
+        print("An hashcash implementation that uses SHA3 384bit]\n")
+        print("[[gi;#00cccc;]Made by [[;red;]vasll]]")
+        print("[[gi;#00cccc;]Github: https://github.com/vasll]\n")
+        raise cliExit()
+
+
+# The main command
+@cli.command(help='Example: [[;#00cccc;]"hashcash6 mikehawk@gmail.com --zero-bits 18"]',
+             epilog="For more information on hashcash and the various fields visit: "
+                    "https://en.wikipedia.org/wiki/Hashcash")
+def generate(
+        resource: str = Argument(..., help="Email or IP of the sender", show_default=False),
+        zero_bits: Optional[int] = Option(20, help="How many 0 bits we want at the start of the Hashcash6 header hash"),
+        len_rand: Optional[int] = Option(16, help="Length in chars of the 'rand' field"),
+        len_counter: Optional[int] = Option(4, help="Length in chars of the 'counter' field"),
+        threads: Optional[int] = Option(default=1, help="Number of threads to be used for hash generation", min=1),
+        download: Optional[bool] = Option(None, "--download",
+                                          help="Download a .json file containing the Hashcash6 output"),
+        about: Optional[bool] = Option(None, "--about", callback=about_callback, help="About Hashcash6")):
+    hashcash6 = Hashcash6(resource, zero_bits, len_rand, len_counter)
+    values: dict
+
+    calc_start_time = datetime.now()
+
+    if threads > 1:
+        values = hashcash6.generate_multicore(threads)
+    else:
+        values = hashcash6.generate()
+
+    calc_end_time = datetime.now() - calc_start_time
+
+    print(
+        json.dumps(
+            {
+                "header": values['header'],
+                "hash_hex": values['hash'],
+                "hash_bin": hex_to_bin(values['hash']),
+                "threads": threads,
+                "resource": resource,
+                "zero_bits": zero_bits,
+                "time_elapsed": f"{calc_end_time}"
+            }
+        )
+    )
+
+
+if __name__ == "__main__":
+    cli()  # Start the typer CLI
