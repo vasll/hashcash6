@@ -3,10 +3,9 @@ import json
 import multiprocessing as mp
 from hashlib import sha3_384
 from time import sleep
-
 from typer import Option, Typer, Argument, Exit as cliExit
 from typing import Optional
-from standalone.hc6_utils import hex_to_bin, has_leading_zeros, clean_filename, rand_base64
+from hc6_utils import hex_to_bin, has_leading_zeros, clean_filename, rand_base64
 from datetime import datetime
 from math import floor
 from rich import print as richprint
@@ -111,6 +110,10 @@ def generate(
         to_txt: Optional[bool] = Option(None, "--to-txt", help="Save the output to a .txt file"),
         to_json: Optional[bool] = Option(None, "--to-json", help="Save the output to a .json file"),
         about: Optional[bool] = Option(None, "--about", callback=about_callback, help="About Hashcash6")):
+    if len(resource) > 254:  # If resource is longer than 254 chars, truncate it
+        print("[italic]Resource is longer than 254 chars and will be truncated[/italic]")
+        resource = resource[0:254]
+
     hashcash6 = Hashcash6(resource, zero_bits, len_rand, len_counter)
     values: dict
 
@@ -121,8 +124,9 @@ def generate(
                   f'bits using {threads} threads...', end='')
         values = hashcash6.generate_multicore(threads)
     else:
-        richprint(f'\nGenerating Hashcash6 for resource "{resource}" with [dark_green]{zero_bits}[/dark_green] zero bits '
-                  f'using 1 thread...', end='')
+        richprint(
+            f'\nGenerating Hashcash6 for resource "{resource}" with [dark_green]{zero_bits}[/dark_green] zero bits '
+            f'using 1 thread...', end='')
         values = hashcash6.generate()
 
     calc_end_time = datetime.now() - calc_start_time
@@ -164,4 +168,4 @@ def generate(
 
 
 if __name__ == "__main__":
-    cli()   # Start the typer CLI
+    cli()  # Start the typer CLI
