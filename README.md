@@ -29,7 +29,7 @@
 
   ### Sample command and output ###
   ```
-  > python hashcash6.py sample@mail.com --zero-bits 22
+  > python hashcash6.py --zero-bits 22 sample@mail.com
 
 Generating Hashcash6 for resource "sample@mail.com" with 22 zero bits using 1 thread... Done!
 
