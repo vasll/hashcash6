@@ -24,7 +24,7 @@
 
   ## Standalone script usage ##
   ```powershell 
-  > python hashcash6.py [RESOURCE] [options]
+  > python hashcash6.py [OPTIONS] RESOURCE  
   ```
 
   ### Sample command and output ###
