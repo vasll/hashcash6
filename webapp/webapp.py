@@ -2,6 +2,8 @@ from flask import Flask
 from threading import Thread
 from views import views
 
+# WEBAPP VERSION = 1
+
 app = Flask('')
 app.register_blueprint(views, url_prefix="/")
 

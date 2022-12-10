@@ -5,7 +5,7 @@ from hashlib import sha3_384
 from time import sleep
 from typer import Option, Typer, Argument, Exit as cliExit
 from typing import Optional
-from hc6_utils import hex_to_bin, has_leading_zeros, clean_filename, rand_base64
+from standalone.hc6_utils import hex_to_bin, has_leading_zeros, clean_filename, rand_base64
 from datetime import datetime
 from math import floor
 from rich import print as richprint
@@ -84,7 +84,7 @@ ascart = r"""[purple]    __  __                    __                           
 [purple]   / / / /  ____ _   _____   / /_   _____  ____ _   _____   / /_[/purple]   [yellow]/ ___/
 [purple]  / /_/ /  / __ `/  / ___/  / __ \ / ___/ / __ `/  / ___/  / __ \ [/purple][yellow]/ __ \
 [purple] / __  /  / /_/ /  (__  )  / / / // /__  / /_/ /  (__  )  / / / /[/purple][yellow]/ /_/ /
-[purple]/_/ /_/   \__,_/  /____/  /_/ /_/ \___/  \__,_/  /____/  /_/ /_/[/purple] [yellow]\____/ [white]v1.0[/white]"""
+[purple]/_/ /_/   \__,_/  /____/  /_/ /_/ \___/  \__,_/  /____/  /_/ /_/[/purple] [yellow]\____/"""
 
 
 # Callback for the --about Option
@@ -94,7 +94,7 @@ def about_callback(value: bool):
         richprint("An hashcash implementation that uses SHA3 384bit")
         richprint("Made by [cyan]vasll")
         richprint("Github: [cyan]https://github.com/vasll")
-        richprint("Version: 1.0 standalone")
+        richprint("Version: 0.1 standalone")
         raise cliExit()
 
 
