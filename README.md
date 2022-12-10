@@ -4,7 +4,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="https://i.imgur.com/2lIERD6.png" alt="Logo" width="148" height="77">
+    <img src="https://i.imgur.com/wFKTpJk.png" alt="Logo" width="208.5" height="119.25">
   </a>
   
   <h3 align="center">Hashcash6</h3>
