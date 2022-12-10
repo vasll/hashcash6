@@ -10,9 +10,9 @@
   <h3 align="center">Hashcash6</h3>
   
   <p align="center">
-    An hashcash implementation that uses SHA3 384bit 
+    A simple hashcash implementation that uses SHA3 384bit 
     <br />
-    <a href="NOTFINISHED/TODO"><strong>Try it here »</strong></a>
+    <a href="https://hashcash6.vasll.repl.co/"><strong>Try the web version here »</strong></a>
     <br />
     <br />
     <a href="https://github.com/vasll/Hashcash6/issues">Report Bug</a>
