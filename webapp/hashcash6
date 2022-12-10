@@ -5,8 +5,7 @@ from standalone.hashcash6 import Hashcash6
 from standalone.hc6_utils import hex_to_bin
 from datetime import datetime
 
-# Modified hashcash6 script for the webapp
-# TODO - Rename hashcash6webcli to hashcash6 in production
+# Modified hashcash6.py script to be used with the webapp
 
 cli = Typer(
     add_completion=False,

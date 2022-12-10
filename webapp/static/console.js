@@ -1,5 +1,3 @@
-// TODO stop threads on exit
-
 function isJson(str) { // this is from stackoverflow idk
     try {
         let obj = JSON.parse(str);
